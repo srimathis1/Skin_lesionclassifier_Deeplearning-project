@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skin Cancer Detection</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #eef2f3, #dfe9f3);
+            text-align: center;
+        }
+
+        .card {
+            background: white;
+            width: 420px;
+            margin: 60px auto;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        input, select, button {
+            margin-top: 10px;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+        }
+
+        .result-box {
+            background: #f1f8f4;
+            padding: 12px;
+            margin-top: 10px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .danger {
+            color: red;
+        }
+
+        img {
+            width: 220px;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+
+    <h2>Skin Lesion Classifier</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required><br>
+
+        <select name="model_choice" required>
+            <option value="">Choose Model</option>
+            <option value="mobilenet">MobileNet</option>
+            <option value="vit">Vision Transformer</option>
+            <option value="both">Compare Both</option>
+        </select><br>
+
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if image_data %}
+        <img src="data:image/png;base64,{{ image_data }}">
+    {% endif %}
+
+    {% if result1 %}
+        <div class="result-box {% if 'Melanoma' in result1 %}danger{% endif %}">
+            {{ result1 }}
+        </div>
+    {% endif %}
+
+    {% if result2 %}
+        <div class="result-box {% if 'Melanoma' in result2 %}danger{% endif %}">
+            {{ result2 }}
+        </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
